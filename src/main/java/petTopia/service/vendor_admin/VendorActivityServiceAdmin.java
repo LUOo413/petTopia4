@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import petTopia.model.vendor.VendorActivity;
 import petTopia.repository.vendor.VendorActivityRepository;
+import petTopia.repository.vendor.VendorActivityReviewRepository;
 import petTopia.repository.vendor_admin.VendorActivityImagesRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class VendorActivityServiceAdmin {
 
 	@Autowired
 	private VendorActivityRepository vendorActivityRepository;
+	
+	@Autowired
+	private VendorActivityReviewRepository vendorActivityReviewRepository;
 	
 	@Autowired
 	private VendorActivityImagesRepository vendorActivityImagesRepository;
@@ -33,6 +37,8 @@ public class VendorActivityServiceAdmin {
 
 	public void deleteVendorActivity(Integer id) {
 		vendorActivityRepository.deleteById(id);
+		vendorActivityReviewRepository.deleteByVendorActivityId(id);
+		
 
 	}
 
