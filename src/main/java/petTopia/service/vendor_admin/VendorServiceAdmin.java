@@ -41,7 +41,7 @@ public class VendorServiceAdmin {
 
 	public Optional<Vendor> getVendorProfile(String email, String password) {
 		Optional<User> user = getUserByEmailAndPassword(email, password);
-		if (user.isPresent()) {
+		if (user.isPresent()) {  //&& user.get().getUserRole() == UserRole.vendor
 			return vendorRepository.findById(user.get().getUserId());
 		}
 		return Optional.empty();
