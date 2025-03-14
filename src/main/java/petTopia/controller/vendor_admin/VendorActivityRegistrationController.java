@@ -2,14 +2,18 @@ package petTopia.controller.vendor_admin;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import petTopia.model.vendor.ActivityRegistration;
 import petTopia.repository.vendor_admin.ActivityRegistrationRepository;
@@ -52,9 +56,26 @@ public class VendorActivityRegistrationController {
 		return ResponseEntity.ok("All registrations have been confirmed and notifications sent.");
 	}
 
+	@ResponseBody
+	@PutMapping("/api/vendor_admin/registration/update/{id}")
+	public ResponseEntity<?> updateRegistrationStatus(@PathVariable Integer id,
+			@RequestBody String status) {
+		Optional<ActivityRegistration> registrationopt = activityRegistrationRepository.findById(id);
+
+		if (registrationopt.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No registrations found.");
+			
+		}
+	    ActivityRegistration registration = registrationopt.get();
+
+		registration.setStatus(status);
+		activityRegistrationRepository.save(registration);
+		return ResponseEntity.ok(registration);
+	}
+
 	// 单个报名 ID 更新状态为 "confirmed" 并发送通知
-	@PutMapping("/api/vendor_admin/activity/confirmById")
-	public ResponseEntity<?> confirmRegistrationById(@RequestParam Integer registrationId) {
+	@PutMapping("/api/vendor_admin/activity/confirmById/{registrationId}")
+	public ResponseEntity<?> confirmRegistrationById(@PathVariable Integer registrationId) {
 		ActivityRegistration registration = activityRegistrationRepository.findById(registrationId).orElse(null);
 
 		if (registration == null) {
