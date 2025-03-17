@@ -25,9 +25,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import petTopia.model.vendor.ActivityPeopleNumber;
 import petTopia.model.vendor.ActivityType;
+import petTopia.model.vendor.CalendarEvent;
 import petTopia.model.vendor.Vendor;
 import petTopia.model.vendor.VendorActivity;
 import petTopia.model.vendor.VendorActivityImages;
+import petTopia.repository.vendor.CalendarEventRepository;
 import petTopia.repository.vendor.VendorActivityRepository;
 import petTopia.repository.vendor.VendorRepository;
 import petTopia.repository.vendor_admin.ActivityPeopleNumberRepository;
@@ -55,6 +57,9 @@ public class VendorActivityController {
 
 	@Autowired
 	private ActivityPeopleNumberRepository activityPeopleNumberRepository;
+	
+	@Autowired
+	private CalendarEventRepository calendarEventRepository;
 
 	public void updateActivityCount(Vendor vendor) {
 		int activityCount = vendorActivityRepository.countByVendor(vendor);
@@ -212,6 +217,13 @@ public class VendorActivityController {
 			activityPeopleNumberRepository.save(activityPeopleNumber);
 
 			updateActivityCount(vendor);
+			
+			CalendarEvent calendarEvent = new CalendarEvent();
+			calendarEvent.setEventTitle(activity_name);
+			calendarEvent.setStartTime(startTime);
+			calendarEvent.setEndTime(endTime);
+			calendarEvent.setVendorActivity(vendorActivity);
+			calendarEventRepository.save(calendarEvent);
 
 			return new ResponseEntity<>(HttpStatus.CREATED); // 201
 		} catch (Exception e) {
