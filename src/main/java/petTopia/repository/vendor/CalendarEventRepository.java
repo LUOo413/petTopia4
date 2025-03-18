@@ -19,4 +19,6 @@ public interface CalendarEventRepository extends JpaRepository<CalendarEvent, In
 
     // 查詢在特定時間範圍內的事件
     List<CalendarEvent> findByStartTimeBetween(LocalDateTime startTime, LocalDateTime endTime);
+
+	List<CalendarEvent> findByVendorId(Integer vendorId);
 }

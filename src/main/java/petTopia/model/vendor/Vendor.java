@@ -94,6 +94,10 @@ public class Vendor {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CalendarEvent> calendarEvents;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<VendorCertification> certifications;
 
 	@JsonIgnore

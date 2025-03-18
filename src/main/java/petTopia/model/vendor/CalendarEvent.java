@@ -28,6 +28,11 @@ public class CalendarEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    
+    @JsonIgnore
+	@ManyToOne
+	@JoinColumn(name = "vendor_id", nullable = false)
+	private Vendor vendor;
 
     @Column(name = "event_title", nullable = false, length = 255)
     private String eventTitle;
@@ -37,16 +42,19 @@ public class CalendarEvent {
 
     @Column(name = "end_time", nullable = false)
     private java.util.Date endTime;
+    
+    @Column(name="color")
+    private String color;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "vendor_activity_id", referencedColumnName = "id", nullable = false)
     private VendorActivity vendorActivity;
 
-    @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT GETDATE()")
-    private LocalDateTime createdAt;
+    @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT GETDATE()", updatable = false)
+    private java.util.Date createdAt;
 
     @Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT GETDATE()")
-    private LocalDateTime updatedAt;
+    private java.util.Date updatedAt;
 }
 

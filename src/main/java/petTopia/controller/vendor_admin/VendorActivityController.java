@@ -223,6 +223,10 @@ public class VendorActivityController {
 			calendarEvent.setStartTime(startTime);
 			calendarEvent.setEndTime(endTime);
 			calendarEvent.setVendorActivity(vendorActivity);
+			calendarEvent.setVendor(vendor);
+			calendarEvent.setCreatedAt(new Date());
+			calendarEvent.setUpdatedAt(new Date());
+			calendarEvent.setColor("#ffb8b8");
 			calendarEventRepository.save(calendarEvent);
 
 			return new ResponseEntity<>(HttpStatus.CREATED); // 201
