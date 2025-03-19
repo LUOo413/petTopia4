@@ -294,6 +294,19 @@ public class VendorActivityController {
 
 			// 6. 儲存變更
 			vendorActivityRepository.save(vendorActivity);
+			
+			Optional<CalendarEvent> calendarOpt = calendarEventRepository.findByVendorActivityId(activityId);
+			if (calendarOpt.isPresent()) {
+				System.out.println(calendarOpt);
+				CalendarEvent calendarEvent = calendarOpt.get(); // 取出对象
+				calendarEvent.setEventTitle(activity_name);
+				calendarEvent.setStartTime(startTime);
+				calendarEvent.setEndTime(endTime);
+				calendarEvent.setUpdatedAt(new Date());
+				calendarEventRepository.save(calendarEvent);
+
+				return new ResponseEntity<>(calendarEvent, HttpStatus.OK); // 返回 200 OK
+			}
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {

@@ -25,36 +25,36 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CalendarEvent {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    
-    @JsonIgnore
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer eventId;
+
+	
 	@ManyToOne
 	@JoinColumn(name = "vendor_id", nullable = false)
 	private Vendor vendor;
 
-    @Column(name = "event_title", nullable = false, length = 255)
-    private String eventTitle;
+	@Column(name = "event_title", nullable = false, length = 255)
+	private String eventTitle;
 
-    @Column(name = "start_time", nullable = false)
-    private java.util.Date startTime;
+	@Column(name = "start_time", nullable = false)
+	private java.util.Date startTime;
 
-    @Column(name = "end_time", nullable = false)
-    private java.util.Date endTime;
-    
-    @Column(name="color")
-    private String color;
+	@Column(name = "end_time", nullable = false)
+	private java.util.Date endTime;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "vendor_activity_id", referencedColumnName = "id", nullable = false)
-    private VendorActivity vendorActivity;
+	@Column(name = "color")
+	private String color;
 
-    @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT GETDATE()", updatable = false)
-    private java.util.Date createdAt;
+	
+	@ManyToOne
+	@JoinColumn(name = "vendor_activity_id", referencedColumnName = "id", nullable = false)
+	private VendorActivity vendorActivity;
 
-    @Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT GETDATE()")
-    private java.util.Date updatedAt;
+	@Column(name = "created_at", columnDefinition = "DATETIME DEFAULT GETDATE()", updatable = false)
+	private java.util.Date createdAt;
+
+	@Column(name = "updated_at", columnDefinition = "DATETIME DEFAULT GETDATE()")
+	private java.util.Date updatedAt;
 }
-

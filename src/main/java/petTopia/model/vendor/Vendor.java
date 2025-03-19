@@ -114,13 +114,11 @@ public class Vendor {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor", cascade = CascadeType.ALL)
 	private List<VendorActivityReview> reviews;
 
-	@JsonIgnore
+//	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "vendor", cascade = CascadeType.ALL)
 	private List<VendorImages> vendorImages;
 
-	@JsonIgnore
-	@OneToMany(mappedBy = "vendor", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<VendorImages> images;
+	
 
 	/* 使用Transient防止被序列化，用於Service層賦值 */
 	@Transient
