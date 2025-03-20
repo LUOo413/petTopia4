@@ -6,11 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
-import jakarta.transaction.Transactional;
 import petTopia.model.vendor.VendorActivity;
 import petTopia.repository.vendor.VendorActivityRepository;
-import petTopia.repository.vendor.VendorActivityReviewRepository;
 import petTopia.repository.vendor_admin.VendorActivityImagesRepository;
 
 @Service
@@ -18,9 +15,6 @@ public class VendorActivityServiceAdmin {
 
 	@Autowired
 	private VendorActivityRepository vendorActivityRepository;
-	
-	@Autowired
-	private VendorActivityReviewRepository vendorActivityReviewRepository;
 	
 	@Autowired
 	private VendorActivityImagesRepository vendorActivityImagesRepository;
@@ -37,10 +31,9 @@ public class VendorActivityServiceAdmin {
 		return vendorActivityRepository.findByVendorId(vendorId);
 	}
 
-	@Transactional
 	public void deleteVendorActivity(Integer id) {
-		vendorActivityReviewRepository.deleteByVendorActivityId(id);
 		vendorActivityRepository.deleteById(id);
+
 	}
 
 	public void addActivity(VendorActivity activity) {
